@@ -1,0 +1,2 @@
+# react-project-feedback-app
+A feedback application for a product or service. Built following a tutorial on Udemy.
