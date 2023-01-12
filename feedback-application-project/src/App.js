@@ -1,10 +1,31 @@
-function App () {
+//import FeedbackItem from "./components/FeedbackItem"
+import Header from "./components/Header"
+import { useState } from "react"
+import feedbackData from "./data/FeedbackData"
+import FeedbackList from "./components/FeedbackList"
 
+function App () {
+    const [feedback, setFeedback] = useState(feedbackData)
+
+    const deleteFeedback = (id) => {
+        if (window.confirm('Are you sure you want to delete?') ) {
+            setFeedback(feedback.filter( (item) => (
+                item.id !== id
+            )))
+        }
+    }
 
     return (
+        <>
+        <Header text="Feedback UI" bgColor='black' textColor='red'/>
+       
         <div className="container">
+            <FeedbackList 
+            feedback={feedback}
+            handleDelete={deleteFeedback}/>
             <h1>My feedback application</h1>
         </div>
+        </>
     )
 //     const title = 'Blog Post';
 //     const body = 'This is my blog post';
