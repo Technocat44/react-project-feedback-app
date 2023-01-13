@@ -3,6 +3,8 @@ import Header from "./components/Header"
 import { useState } from "react"
 import feedbackData from "./data/FeedbackData"
 import FeedbackList from "./components/FeedbackList"
+import FeedbackStats from "./components/FeedbackStats"
+import FeedbackForm from "./components/FeedbackForm"
 
 function App () {
     const [feedback, setFeedback] = useState(feedbackData)
@@ -20,11 +22,15 @@ function App () {
         <Header text="Feedback UI" bgColor='black' textColor='red'/>
        
         <div className="container">
+            <FeedbackForm />
+            <FeedbackStats feedback={feedback}/>
             <FeedbackList 
             feedback={feedback}
             handleDelete={deleteFeedback}/>
             <h1>My feedback application</h1>
+
         </div>
+      
         </>
     )
 //     const title = 'Blog Post';
