@@ -6,6 +6,10 @@ import FeedbackList from "./components/FeedbackList"
 import FeedbackStats from "./components/FeedbackStats"
 import FeedbackForm from "./components/FeedbackForm"
 import { v4 as uuidv4} from 'uuid'
+// import AboutPage from "./pages/AboutPage"
+import { BrowserRouter as Router, Routes, Route,} from "react-router-dom"
+import AboutPage from "./pages/AboutPage"
+
 
 function App () {
     const [feedback, setFeedback] = useState(feedbackData)
@@ -27,18 +31,40 @@ function App () {
 
     return (
         <>
-        <Header text="Feedback UI" bgColor='black' textColor='red'/>
-       
-        <div className="container">
-            <FeedbackForm handleAdd={addFeedback}/>
-            <FeedbackStats feedback={feedback}/>
-            <FeedbackList 
-            feedback={feedback}
-            handleDelete={deleteFeedback}/>
-            <h1>My feedback application</h1>
-
-        </div>
-      
+    
+        <Router>
+           
+            <Header text="Feedback UI" bgColor='black' textColor='red'/>
+            <div className="container">
+            <Routes>
+                <Route exact path='/' element={
+                    // We need a parent element to have multiple components inside one Route
+                    // The best way
+                    <>
+                    <FeedbackForm handleAdd={addFeedback}> </FeedbackForm>
+                    <FeedbackStats feedback={feedback}/>
+                    <FeedbackList 
+                        feedback={feedback}
+                        handleDelete={deleteFeedback}/>
+                    </>
+                }>
+                </Route>
+                <Route path='/about' element={<AboutPage />}></Route>
+                    {/* <div className="container">
+                            <FeedbackForm />
+                            <FeedbackStats feedback={feedback}/>
+                           
+                            <h1>My feedback application</h1>
+                        <Route path="/about">
+                            This is the about route
+                        </Route>
+                    </div> */}
+                    
+               
+            </Routes>
+            </div>
+        </Router>
+    
         </>
     )
 //     const title = 'Blog Post';
