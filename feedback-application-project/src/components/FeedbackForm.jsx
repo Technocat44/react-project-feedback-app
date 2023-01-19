@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Button from './shared/Button';
 import Rating from './Rating';
 
-function FeedbackForm() {
+function FeedbackForm({handleAdd}) {
 
   const [text, setText] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(true);
@@ -25,10 +25,24 @@ function FeedbackForm() {
     setText(e.target.value);
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (text.trim().length > 10) {
+        const newFeedback = {
+            text: text,
+            rating: rating
+        }
+        handleAdd(newFeedback);
+
+        setText("")
+    } 
+  
+  }
+
   return (
     <>
     <Card >
-        <form>
+        <form onSubmit={handleSubmit}>
             <h2>How would you rank these Stephen King novels?</h2>
             <Rating select={(rating) => setRating(rating)}/>
             <div className='input-group'>
@@ -38,7 +52,7 @@ function FeedbackForm() {
                 placeholder='Rank your favorite books'
                 value={text}    
                 >
-                </input>
+                </input >
                 <Button type='submit' isDisabled={btnDisabled}>
                     Send
                 </Button>

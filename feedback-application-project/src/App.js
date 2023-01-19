@@ -5,6 +5,7 @@ import feedbackData from "./data/FeedbackData"
 import FeedbackList from "./components/FeedbackList"
 import FeedbackStats from "./components/FeedbackStats"
 import FeedbackForm from "./components/FeedbackForm"
+import { v4 as uuidv4} from 'uuid'
 
 function App () {
     const [feedback, setFeedback] = useState(feedbackData)
@@ -16,13 +17,20 @@ function App () {
             )))
         }
     }
+    const addFeedback = (newFeedback) => {
+        newFeedback.id = uuidv4();
+        // use the spread operator to take all the objects that are currently in the array and copying them
+        // over to the new one because the state is immutable. 
+        setFeedback([newFeedback, ...feedback])
+        console.log(newFeedback)
+    }
 
     return (
         <>
         <Header text="Feedback UI" bgColor='black' textColor='red'/>
        
         <div className="container">
-            <FeedbackForm />
+            <FeedbackForm handleAdd={addFeedback}/>
             <FeedbackStats feedback={feedback}/>
             <FeedbackList 
             feedback={feedback}

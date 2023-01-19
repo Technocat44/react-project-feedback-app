@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { useState } from 'react';
 import Card from './shared/Card';
 import { FaTimes } from 'react-icons/fa'

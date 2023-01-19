@@ -16,6 +16,12 @@ const feedbackData = [
         rating: 10,
         title: "IT",
         text: "The scariest Stephen King novel"
+    },
+    {
+        id: 4,
+        rating: 9,
+        title: "The Shining",
+        text: "The coldest"
     }
 
     ]
