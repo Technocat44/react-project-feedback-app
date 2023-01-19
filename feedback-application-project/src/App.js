@@ -13,6 +13,7 @@ import AboutIconLink from "./components/AboutIconLink"
 import Post from "./components/Post"
 
 
+
 function App () {
     const [feedback, setFeedback] = useState(feedbackData)
 
@@ -59,7 +60,11 @@ function App () {
                             This is the about route
                         </Route>
                     </div> */}
-                <Route path='/post/:id/:name' element={<Post></Post>}></Route>
+
+                {/* The asterisk after a path allows us to create nested routes 
+                Inside the post.jsx we can create another route and only if that route has a new path 
+                Basically we can navigate to /post and that renders but also post/show and that renders the nested jsx*/}
+                <Route path='/post/*' element={<Post></Post>}></Route>
                
             </Routes>
             <AboutIconLink></AboutIconLink>
