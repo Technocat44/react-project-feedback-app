@@ -9,6 +9,8 @@ import { v4 as uuidv4} from 'uuid'
 // import AboutPage from "./pages/AboutPage"
 import { BrowserRouter as Router, Routes, Route,} from "react-router-dom"
 import AboutPage from "./pages/AboutPage"
+import AboutIconLink from "./components/AboutIconLink"
+import Post from "./components/Post"
 
 
 function App () {
@@ -31,9 +33,7 @@ function App () {
 
     return (
         <>
-    
         <Router>
-           
             <Header text="Feedback UI" bgColor='black' textColor='red'/>
             <div className="container">
             <Routes>
@@ -59,9 +59,10 @@ function App () {
                             This is the about route
                         </Route>
                     </div> */}
-                    
+                <Route path='/post/:id/:name' element={<Post></Post>}></Route>
                
             </Routes>
+            <AboutIconLink></AboutIconLink>
             </div>
         </Router>
     
