@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route,} from "react-router-dom"
 import AboutPage from "./pages/AboutPage"
 import AboutIconLink from "./components/AboutIconLink"
 import Post from "./components/Post"
+import {FeedbackProvider} from "./context/FeedbackContext"
 
 
 
@@ -34,42 +35,42 @@ function App () {
 
     return (
         <>
-        <Router>
-            <Header text="Feedback UI" bgColor='black' textColor='red'/>
-            <div className="container">
-            <Routes>
-                <Route exact path='/' element={
-                    // We need a parent element to have multiple components inside one Route
-                    // The best way
-                    <>
-                    <FeedbackForm handleAdd={addFeedback}> </FeedbackForm>
-                    <FeedbackStats feedback={feedback}/>
-                    <FeedbackList 
-                        feedback={feedback}
-                        handleDelete={deleteFeedback}/>
-                    </>
-                }>
-                </Route>
-                <Route path='/about' element={<AboutPage />}></Route>
-                    {/* <div className="container">
-                            <FeedbackForm />
-                            <FeedbackStats feedback={feedback}/>
-                           
-                            <h1>My feedback application</h1>
-                        <Route path="/about">
-                            This is the about route
-                        </Route>
-                    </div> */}
+        <FeedbackProvider>
+            <Router>
+                <Header text="Feedback UI" bgColor='black' textColor='red'/>
+                <div className="container">
+                <Routes>
+                    <Route exact path='/' element={
+                        // We need a parent element to have multiple components inside one Route
+                        // The best way
+                        <>
+                        <FeedbackForm handleAdd={addFeedback}> </FeedbackForm>
+                        <FeedbackStats />
+                        <FeedbackList handleDelete={deleteFeedback}/>
+                        </>
+                    }>
+                    </Route>
+                    <Route path='/about' element={<AboutPage />}></Route>
+                        {/* <div className="container">
+                                <FeedbackForm />
+                                <FeedbackStats feedback={feedback}/>
+                            
+                                <h1>My feedback application</h1>
+                            <Route path="/about">
+                                This is the about route
+                            </Route>
+                        </div> */}
 
-                {/* The asterisk after a path allows us to create nested routes 
-                Inside the post.jsx we can create another route and only if that route has a new path 
-                Basically we can navigate to /post and that renders but also post/show and that renders the nested jsx*/}
-                <Route path='/post/*' element={<Post></Post>}></Route>
-               
-            </Routes>
-            <AboutIconLink></AboutIconLink>
-            </div>
-        </Router>
+                    {/* The asterisk after a path allows us to create nested routes 
+                    Inside the post.jsx we can create another route and only if that route has a new path 
+                    Basically we can navigate to /post and that renders but also post/show and that renders the nested jsx*/}
+                    <Route path='/post/*' element={<Post></Post>}></Route>
+                
+                </Routes>
+                <AboutIconLink></AboutIconLink>
+                </div>
+            </Router>
+        </FeedbackProvider>
     
         </>
     )
