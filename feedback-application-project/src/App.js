@@ -1,11 +1,8 @@
 //import FeedbackItem from "./components/FeedbackItem"
 import Header from "./components/Header"
-import { useState } from "react"
-import feedbackData from "./data/FeedbackData"
 import FeedbackList from "./components/FeedbackList"
 import FeedbackStats from "./components/FeedbackStats"
 import FeedbackForm from "./components/FeedbackForm"
-import { v4 as uuidv4} from 'uuid'
 // import AboutPage from "./pages/AboutPage"
 import { BrowserRouter as Router, Routes, Route,} from "react-router-dom"
 import AboutPage from "./pages/AboutPage"
@@ -15,23 +12,7 @@ import {FeedbackProvider} from "./context/FeedbackContext"
 
 
 
-function App () {
-    const [feedback, setFeedback] = useState(feedbackData)
-
-    const deleteFeedback = (id) => {
-        if (window.confirm('Are you sure you want to delete?') ) {
-            setFeedback(feedback.filter( (item) => (
-                item.id !== id
-            )))
-        }
-    }
-    const addFeedback = (newFeedback) => {
-        newFeedback.id = uuidv4();
-        // use the spread operator to take all the objects that are currently in the array and copying them
-        // over to the new one because the state is immutable. 
-        setFeedback([newFeedback, ...feedback])
-        console.log(newFeedback)
-    }
+function App () {   
 
     return (
         <>
@@ -44,9 +25,9 @@ function App () {
                         // We need a parent element to have multiple components inside one Route
                         // The best way
                         <>
-                        <FeedbackForm handleAdd={addFeedback}> </FeedbackForm>
+                        <FeedbackForm > </FeedbackForm>
                         <FeedbackStats />
-                        <FeedbackList handleDelete={deleteFeedback}/>
+                        <FeedbackList />
                         </>
                     }>
                     </Route>

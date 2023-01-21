@@ -7,7 +7,7 @@ require('react-dom');
 window.React2 = require('react');
 console.log(window.React1 === window.React2);
 
-function FeedbackList({ handleDelete }) {
+function FeedbackList() {
 
   /* When using context, we can import FeedbackContext as think of it as a component. 
   That context is a provider and has one value which is a feedback array created by useState
@@ -18,7 +18,7 @@ function FeedbackList({ handleDelete }) {
   */
 
   const {feedback} = useContext(FeedbackContext);
-
+ 
 
   if (!feedback || feedback.length === 0) {
     return <p>No feedback yet</p>
@@ -29,7 +29,6 @@ function FeedbackList({ handleDelete }) {
             <FeedbackItem 
             key={item.id} 
             item={item} 
-            handleDelete={handleDelete} 
             />
         ))}
     </div>
