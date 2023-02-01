@@ -1,17 +1,26 @@
 import Card from './shared/Card'
-import { useState } from 'react'
 import Button from './shared/Button';
 import Rating from './Rating';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import FeedbackContext from '../context/FeedbackContext';
 
-function FeedbackForm({handleAdd}) {
+function FeedbackForm() {
 
   const [text, setText] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [rating, setRating] = useState(10);
   const [message, setMessage] = useState("");
-  const {addFeedback} = useContext(FeedbackContext);
+  const {addFeedback, feedbackEdit, updateFeedbackItem} = useContext(FeedbackContext);
+
+  /* useEffect is good for HTTP request, if you had to fetch data, you would do that in this 
+  */
+  useEffect(() => {
+    if(feedbackEdit.edit === true) {
+        setBtnDisabled(false)
+        setText(feedbackEdit.item.text)
+        setRating(feedbackEdit.item.rating)
+    }
+  }, [feedbackEdit])
 
   const handleTextChange = (e) => {
     if (text === ''){
@@ -34,7 +43,12 @@ function FeedbackForm({handleAdd}) {
             text: text,
             rating: rating
         }
-        addFeedback(newFeedback);
+
+        if (feedbackEdit.edit === true) {
+            updateFeedbackItem(feedbackEdit.item.id, newFeedback)
+        } else {
+            addFeedback(newFeedback);
+        }
 
         setText("")
     } 
