@@ -24,6 +24,16 @@
       "rating": "6",
       "id": "5",
       "text": "This is from postman"
+    },
+    {
+      "text": "This is a test to add the newfeedback so it is persistant",
+      "rating": 7,
+      "id": "OOsa3_u"
+    },
+    {
+      "text": "This is an updated item but now its more",
+      "rating": 9,
+      "id": "6QODz5d"
     }
   ]
 }

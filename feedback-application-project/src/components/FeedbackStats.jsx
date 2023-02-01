@@ -7,9 +7,12 @@ function Stats() {
     const {feedback} = useContext(FeedbackContext);
 
     // calculate ratings average
+    console.log(feedback)
     let average = (feedback.reduce( (acc, curr) => {
-        return (acc + curr.rating) 
+      console.log(acc)
+        return (acc + Number(curr.rating)) 
     }, 0 ) / feedback.length)
+    console.log(average)
     average = average.toFixed(1)
 
   return (

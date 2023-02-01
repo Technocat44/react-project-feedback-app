@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { v4 as uuidv4} from 'uuid'
+//import { v4 as uuidv4} from 'uuid'
 
 
 /*
@@ -16,6 +16,30 @@ To run the front end and back end at the same time we can also `npm i concurrent
 And this will allow us to run one single command and it will execute multiple scripts.
 `npm start` is how we start the front end, `npm run server` is for the back end json server we set up
 Add this ["dev": "concurrently \"npm run server\" \"npm start\"" ] to the scripts section and now we can 
+
+
+Fetching Data from JSON Server Backend
+
+We need to use the react hook useEffect that will run as soon as the app loads (like a constructor).
+Create a function that will fetch the data, in this case we call is fetchFeedback
+WE use fetch and await, fetch will make a request to a url, and await will wait for the response, This is a promise.
+The response is the data, the json data specifically, and we set the Feedback to be the response of the GET request. Which will fill
+the array in the useState. 
+
+
+To incorporate the rest of the CRUD functions below like add and delete, we want them to update the mock json server.
+
+Something cool we can do is add a proxy
+Proxy definition - In general, A proxy or proxy server serves as a gateway between your app and the internet. 
+                   It's an intermediate server between client and servers by forwarding client requests to resources. 
+                   In React, we often use this proxying in the development environment.
+
+This proxy will allow us to edit the package.json with the url we want to GET instead of hardcoding them in the fetch.
+In a case where we were making lots of different CRUD request to the same API, we don't have to keep retyping it.
+
+Updating the addFeedback function, we add the promise api with async and fetch and await and make a POST request to 
+add the data. On the front end page, when a user then types in the info and sends it to the mock backend, it is then 
+saved to the db.json file!
 */
 
 const FeedbackContext = createContext()
@@ -37,7 +61,7 @@ export const FeedbackProvider = ({children}) => {
 
     // Fetch feedback
     const fetchFeedback = async () => {
-        const response = await fetch("http://localhost:5000/feedback?_sort=id&_order=desc");
+        const response = await fetch("/feedback?_sort=id&_order=desc");
         const data = await response.json();
         setFeedback(data);
         setIsLoading(false);
@@ -52,25 +76,46 @@ export const FeedbackProvider = ({children}) => {
     }
 
     // Add feedback
-    const addFeedback = (newFeedback) => {
-        newFeedback.id = uuidv4();
+    const addFeedback = async (newFeedback) => {
+        const response = await fetch('/feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newFeedback)
+        })
+
+        const data = await response.json();
+        //newFeedback.id = uuidv4();
         // use the spread operator to take all the objects that are currently in the array and copying them
         // over to the new one because the state is immutable. 
-        setFeedback([newFeedback, ...feedback])
+        setFeedback([data, ...feedback])
         console.log(newFeedback)
     }
 
     // Delete Feedback
-    const deleteFeedback = (id) => {
+    const deleteFeedback = async (id) => {
         if (window.confirm('Are you sure you want to delete?') ) {
+
+            await fetch(`/feedback/${id}`, { method: "DELETE" } );
             setFeedback(feedback.filter( (item) => (
                 item.id !== id
             )))
         }
     }
 
-    const updateFeedbackItem = (id, updItem) => {
-        setFeedback(feedback.map((item) => item.id === id ? {...item, ...updItem} : item))
+    const updateFeedbackItem = async (id, updItem) => {
+    
+        const response = await fetch(`/feedback/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updItem)    
+        })
+        const data = await response.json();
+
+        setFeedback(feedback.map((item) => item.id === id ? {...item, ...data} : item))
     }
 
     return <FeedbackContext.Provider 
